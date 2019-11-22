@@ -1,0 +1,10 @@
+# Created by https://www.gitignore.io
+
+### Intellij ###
+*.iml
+
+## Directory-based project format:
+.idea/
+
+## node
+node_modules/
