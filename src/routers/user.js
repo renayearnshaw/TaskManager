@@ -3,6 +3,7 @@ const User = require('../models/user')
 
 const router = new express.Router()
 
+// Create a user - i.e. sign up
 router.get('/users', async (req, res) => {
     try {
         const users = await User.find({})
@@ -12,6 +13,7 @@ router.get('/users', async (req, res) => {
     }
 })
 
+// Log in an existing user - i.e. sign in
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
