@@ -14,6 +14,8 @@ const port = process.env.PORT || 3000
 //     }
 // })
 
+// Register a new Middleware function that gets run between the request coming in and
+// the route running
 app.use((req, res, next) => {
     res.status(503).send('This site is currently under maintenance. Please try again later.')
 })

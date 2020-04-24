@@ -32,16 +32,20 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+// An instance method
 userSchema.methods.generateAuthToken = async function() {
     const user = this
+    // Create a JWT that contains the id of the user, and is signed with a secret
     const token = jwt.sign({ _id: user._id.toString()}, 'RenaysSecret')
 
+    // Add the new token to the token array stored with the user data
     user.tokens = user.tokens.concat({ token })
     await user.save()
 
     return token
 }
 
+// A static method that is available on the model
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
     if (!user) {

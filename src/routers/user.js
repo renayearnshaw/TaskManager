@@ -16,7 +16,9 @@ router.get('/users', async (req, res) => {
 // Log in an existing user - i.e. sign in
 router.post('/users/login', async (req, res) => {
     try {
+        // Authenticate the user
         const user = await User.findByCredentials(req.body.email, req.body.password)
+        // Create a JWT and return it to the user
         const token = await user.generateAuthToken()
         res.send({ user, token })
     } catch (error) {
@@ -27,7 +29,9 @@ router.post('/users/login', async (req, res) => {
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
     try {
+        // Create a new user
         await user.save()
+        // Create a JWT and return it to the user
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (error) {

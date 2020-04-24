@@ -14,7 +14,7 @@ The __TaskManager__ project is written using ES6/7 `JavaScript` and uses `Expres
 The user's credentials are validated with this API. 
 If successfully authenticated, an authentication token is returned.
 8. `/users` to create a user via a `POST` method (sign-up).\
-The body of the request contains the user's credentials.\
+The body of the request contains the user's credentials. 
 The password is hashed before being stored in the database.
 9. `/users/:id` to get a single user via a `GET` method.
 10. `/users/:id` to update a user via a `PATCH` method.\
@@ -22,8 +22,12 @@ If the password field is updated it is hashed before being stored in the databas
 11. `/users/:id` to delete a user via a `DELETE` method.
 
 Only **sign-up** or **sign-in** are public API's, and accessible to anyone.
-All the other API's require authentication before they can be called.\
-So, for example, only the user who created a particular task has the authority to delete it.
+All the other API's require authentication before they can be called. So, for example, only the user who created a particular task has the authority to delete it.
+
+When a user signs in or signs up the request returns an authentication token - in this case, a Jason Web token. 
+Any subsequent requests must provide this token.
+
+All the tokens issued to a user are stored with the user data.
 
 <br>The application uses:
 1. The `Express` module to create a server that provides the REST API's.
