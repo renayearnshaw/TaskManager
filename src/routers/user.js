@@ -1,16 +1,13 @@
 const express = require('express')
 const User = require('../models/user')
+const auth = require('../middleware/authentication')
 
 const router = new express.Router()
 
-// Create a user - i.e. sign up
-router.get('/users', async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.send(users)
-    } catch (error) {
-        res.status(500).send()
-    }
+// Get a user profile.
+// Register the Middleware function auth, that is run between the request coming in and the route running
+router.get('/users/me', auth, async (req, res) => {
+    res.send(req.user)
 })
 
 // Log in an existing user - i.e. sign in
@@ -26,6 +23,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+// Create a user - i.e. sign up
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
     try {
