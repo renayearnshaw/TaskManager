@@ -23,6 +23,32 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+// Log out of a session
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            // Remove the token from list registered to the user
+            return token.token !== req.token
+        })
+        await req.user.save()
+        res.send()
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+// Log out of all sessions
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        // Remove all tokens registered to the user
+        req.user.tokens = []
+        await req.user.save()
+        res.send()
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 // Create a user - i.e. sign up
 router.post('/users', async (req, res) => {
     const user = new User(req.body)

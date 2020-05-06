@@ -13,14 +13,16 @@ The __TaskManager__ project is written using ES6/7 `JavaScript` and uses `Expres
 7. `/users/login` to log a user in via a `POST` method (sign-in).\
 The user's credentials are validated with this API. 
 If successfully authenticated, an authentication token is returned.
-8. `/users` to create a user via a `POST` method (sign-up).\
+8. `/users/logout` to log a user out via a `POST` method (sign-out).
+8. `/users/logoutAll` to log a user out of all their sessions via a `POST` method (sign-out).
+9. `/users` to create a user via a `POST` method (sign-up).\
 The body of the request contains the user's credentials. 
 The password is hashed before being stored in the database.
 If a user is successfully signed up, an authentication token is returned.
-9. `/users/:id` to get a single user via a `GET` method.
-10. `/users/:id` to update a user via a `PATCH` method.\
+11. `/users/:id` to get a single user via a `GET` method.
+12. `/users/:id` to update a user via a `PATCH` method.\
 If the password field is updated it is hashed before being stored in the database.
-11. `/users/:id` to delete a user via a `DELETE` method.
+13. `/users/:id` to delete a user via a `DELETE` method.
 
 Only **sign-up** or **sign-in** are public API's, and thus accessible to anyone.
 All the other API's require authentication before they can be called. So, for example, only the user who created a particular task has the authority to delete it.
@@ -30,7 +32,7 @@ Any subsequent requests must provide this token as an `Authorization` header in 
 
 All the tokens issued to a user are stored as part of the user's data.
 When a user logs out the token is deleted.
-When a user provides a token in a request, we check that the token against those stored against the user.
+When a user provides a token in a request, we check the token provided against those registered to the user.
 
 <br>The application uses:
 1. The `Express` module to create a server that provides the REST API's.

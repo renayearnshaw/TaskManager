@@ -18,6 +18,8 @@ const auth = async (req, res, next) => {
 
         // Give the route access to the user we just fetched, rather than doing it again
         req.user = user
+        // Return the validated token too
+        req.token = token
 
         next()
     } catch (e) {
