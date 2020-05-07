@@ -4,12 +4,6 @@ const auth = require('../middleware/authentication')
 
 const router = new express.Router()
 
-// Get a user profile.
-// Register the Middleware function auth, that is run between the request coming in and the route running
-router.get('/users/me', auth, async (req, res) => {
-    res.send(req.user)
-})
-
 // Log in an existing user - i.e. sign in
 router.post('/users/login', async (req, res) => {
     try {
@@ -63,20 +57,14 @@ router.post('/users', async (req, res) => {
     }
 })
 
-router.get('/users/:id', async (req, res) => {
-    const _id = req.params.id
-    try {
-        const user = await User.findById(_id)
-        if (!user) {
-            return res.status(404).send()
-        }
-        res.send(user)
-    } catch (error) {
-        res.status(500).send()
-    }
+// Get a user profile.
+// Register the Middleware function auth, that is run between the request coming in and the route running
+router.get('/users/me', auth, async (req, res) => {
+    res.send(req.user)
 })
 
-router.patch('/users/:id', async (req, res) => {
+// Update your profile details
+router.patch('/users/me', auth, async (req, res) => {
     const allowedUpdates = ['name', 'email', 'password', 'age']
     const receivedUpdates = Object.keys(req.body)
     const isValidOperation = receivedUpdates.every((update) => allowedUpdates.includes(update))
@@ -86,25 +74,21 @@ router.patch('/users/:id', async (req, res) => {
     }
 
     try {
-        const user = await User.findById(req.params.id)
-        receivedUpdates.forEach((update) => user[update] = req.body[update])
-        await user.save()
-        if (!user) {
-            return res.status(404).send()
-        }
-        res.send(user)
+        // Authentication returns the user to us - now update it
+        receivedUpdates.forEach((update) => req.user[update] = req.body[update])
+        await req.user.save()
+        res.send(req.user)
     } catch (error) {
         res.status(400).send(error)
     }
 })
 
-router.delete('/users/:id', async (req, res) => {
+// Delete your profile
+router.delete('/users/me', auth, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
-        if (!user) {
-            return res.status(404).send()
-        }
-        res.send(user)
+        // Authentication returns the user to us - now remove it
+        await req.user.remove()
+        res.send(req.user)
     } catch (error) {
         res.status(500).send()
     }
