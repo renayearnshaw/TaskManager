@@ -32,6 +32,20 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+// An instance method that gets called whenever a user object is "stringified" with JSON.stringify().
+// This is what Express does when we pass an object back in the response.
+userSchema.methods.toJSON = function () {
+    const user = this
+    // Convert the Mongoose document into a plain JavaScript object
+    const userObject = user.toObject()
+
+    // Remove data that you want to remain private
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+
 // An instance method
 userSchema.methods.generateAuthToken = async function() {
     const user = this
