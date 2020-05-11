@@ -6,6 +6,12 @@ const Task = mongoose.model('Task', {
     },
     completed: {
         type: Boolean, default: false
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        // Create a relationship with the User model
+        ref: 'User'
     }
 })
 

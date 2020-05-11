@@ -1,5 +1,6 @@
 const express = require('express')
 const Task = require('../models/task')
+const auth = require('../middleware/authentication')
 
 const router = new express.Router()
 
@@ -47,8 +48,14 @@ router.patch('/tasks/:id', async (req, res) => {
     }
 })
 
-router.post('/tasks', async (req, res) => {
-    const task = new Task(req.body)
+// Create a task
+router.post('/tasks', auth, async (req, res) => {
+    const task = new Task({
+        // Use the object spread syntax to get all the properties of req.body into our task
+        ...req.body,
+        // Add the user that we just authenticated via middleware
+        owner: req.user._id
+    })
     try {
         await task.save()
         res.status(201).send(task)

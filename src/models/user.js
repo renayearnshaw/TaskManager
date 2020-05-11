@@ -32,6 +32,16 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+// Set up a virtual property to define a relationship between a user and their tasks.
+// This is not stored in the database.
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    // The field in the 'local' object (user) that defines the relationship
+    localField: '_id',
+    // The field in the 'foreign' object (task) that defines the relationship
+    foreignField: 'owner'
+})
+
 // An instance method that gets called whenever a user object is "stringified" with JSON.stringify().
 // This is what Express does when we pass an object back in the response.
 userSchema.methods.toJSON = function () {
