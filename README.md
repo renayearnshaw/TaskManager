@@ -4,11 +4,11 @@ This project contains code I wrote while following [The Complete Node.js Develop
 ### Description
 The __TaskManager__ project is written using ES6/7 `JavaScript` and uses `Express` to create a simple `Node` web server that allows users to create, store and delete tasks.
 <br><br>The project creates a simple REST API that consists of the following:
-1. `/tasks` to create a task via a `POST` method.
-2. `/tasks` to list all the tasks for a user via a `GET` method.
-3. `/tasks/:id` to get a single task via a `GET` method.
-4. `/tasks/:id` to update a task via a `PATCH` method.
-5. `/tasks/:id` to delete a task via a `DELETE` method.
+1. `/tasks` to create a task via a `POST` method. The id of the user who created the task is stored in the task.
+2. `/tasks` to list all tasks via a `GET` method. A user can only view tasks that they created.
+3. `/tasks/:id` to get a single task via a `GET` method. A user can only view a task if they created it.
+4. `/tasks/:id` to update a task via a `PATCH` method. A user can only update a task if they created it.
+5. `/tasks/:id` to delete a task via a `DELETE` method. A user can only delete a task if they created it.
 6. `/users` to create a user via a `POST` method (sign-up).\
 The body of the request contains the user's credentials. 
 The password is hashed before being stored in the database.
@@ -32,6 +32,8 @@ Any subsequent requests must provide this token as an `Authorization` header in 
 All the tokens issued to a user are stored as part of the user's data.
 When a user logs out the token is deleted.
 When a user provides a token in a request, we check the token provided against those registered to the user.
+
+We used Mongoose to create a bi-directional relationship between a user and the tasks they have created.
 
 <br>The application uses:
 1. The `Express` module to create a server that provides the REST API's.
