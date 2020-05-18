@@ -6,6 +6,7 @@ The __TaskManager__ project is written using ES6/7 `JavaScript` and uses `Expres
 <br><br>The project creates a simple REST API that consists of the following:
 1. `/tasks` to create a task via a `POST` method. The id of the user who created the task is stored in the task.
 2. `/tasks` to list all tasks via a `GET` method. A user can only view tasks that they created.
+Query parameters can be supplied to filter tasks according to whether they have been completed or not.
 3. `/tasks/:id` to get a single task via a `GET` method. A user can only view a task if they created it.
 4. `/tasks/:id` to update a task via a `PATCH` method. A user can only update a task if they created it.
 5. `/tasks/:id` to delete a task via a `DELETE` method. A user can only delete a task if they created it.
@@ -33,13 +34,17 @@ All the tokens issued to a user are stored as part of the user's data.
 When a user logs out the token is deleted.
 When a user provides a token in a request, we check the token provided against those registered to the user.
 
-We used Mongoose to create a bi-directional relationship between a user and the tasks they have created.
-
 <br>The application uses:
 1. The `Express` module to create a server that provides the REST API's.
 2. A `MondoDB` NoSQL database, using the native `Node.js` driver.
-3. `Mongoose` to model users and tasks and to validate and sanitise data.
+3. `Mongoose` to:
+   - model users and tasks
+   - validate and sanitise data
+   - create a bi-directional relationship between a user and the tasks they have created
 3. The `bcrypt` library to store passwords securely by hashing them. 
 4. `JSON Web Tokens` to authenticate users who attempt to use any of the non-public API's 
 (everything expect signing up or logging in). The tokens are generated using the `jsonwebtoken` library.
-5. `Express` middleware to hash passwords and to check that authentication tokens are valid.
+5. `Express` middleware to:
+   - hash passwords
+   - delete any tasks belonging to a user when a user is deleted
+   - check that authentication tokens are valid
