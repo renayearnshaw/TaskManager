@@ -31,6 +31,9 @@ const userSchema = new mongoose.Schema({
             type: String, required: true
         }
     }]
+}, {
+    // Add createdAt and updatedAt timestamps
+    timestamps: true
 })
 
 // Set up a virtual property to define a relationship between a user and their tasks.
