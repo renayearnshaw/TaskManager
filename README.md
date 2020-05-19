@@ -6,7 +6,10 @@ The __TaskManager__ project is written using ES6/7 `JavaScript` and uses `Expres
 <br><br>The project creates a simple REST API that consists of the following:
 1. `/tasks` to create a task via a `POST` method. The id of the user who created the task is stored in the task.
 2. `/tasks` to list all tasks via a `GET` method. A user can only view tasks that they created.
-Query parameters can be supplied to filter tasks according to whether they have been completed or not.
+Query parameters can be supplied to :
+   - filter tasks according to whether they have been completed or not
+   - limit how many tasks are displayed (pagination)
+   - skip a number of pages (pagination)
 3. `/tasks/:id` to get a single task via a `GET` method. A user can only view a task if they created it.
 4. `/tasks/:id` to update a task via a `PATCH` method. A user can only update a task if they created it.
 5. `/tasks/:id` to delete a task via a `DELETE` method. A user can only delete a task if they created it.
@@ -41,6 +44,7 @@ When a user provides a token in a request, we check the token provided against t
    - model users and tasks
    - validate and sanitise data
    - create a bi-directional relationship between a user and the tasks they have created
+   - paginate returned data
 3. The `bcrypt` library to store passwords securely by hashing them. 
 4. `JSON Web Tokens` to authenticate users who attempt to use any of the non-public API's 
 (everything expect signing up or logging in). The tokens are generated using the `jsonwebtoken` library.

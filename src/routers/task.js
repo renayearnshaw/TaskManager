@@ -6,6 +6,7 @@ const router = new express.Router()
 
 // Fetch all tasks created by a specific user
 // GET /tasks?completed=false
+// GET /tasks?limit=10&skip=20
 router.get('/tasks', auth, async (req, res) => {
     const match = {}
 
@@ -17,7 +18,11 @@ router.get('/tasks', auth, async (req, res) => {
         // Populate the 'tasks' virtual property in the user object
         await req.user.populate({
             path: 'tasks',
-            match
+            match,
+            options: {
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip)
+            }
         }).execPopulate()
         res.send(req.user.tasks)
     } catch (error) {
