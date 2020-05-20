@@ -53,3 +53,4 @@ When a user provides a token in a request, we check the token provided against t
    - hash passwords
    - delete any tasks belonging to a user when a user is deleted
    - check that authentication tokens are valid
+6. `multer` for uploading image files

@@ -1,8 +1,13 @@
 const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/authentication')
+const multer = require('multer')
 
 const router = new express.Router()
+// Images should be saved in the avatars directory
+const upload = multer({
+    dest: 'avatars'
+})
 
 // Log in an existing user - i.e. sign in
 router.post('/users/login', async (req, res) => {
@@ -81,6 +86,12 @@ router.patch('/users/me', auth, async (req, res) => {
     } catch (error) {
         res.status(400).send(error)
     }
+})
+
+// Upload a profile image for the user
+// Use the key 'avatar' to send a file containing the avatar image
+router.post('/users/me/avatar', upload.single('avatar'), async (req, res) => {
+    res.send()
 })
 
 // Delete your profile
