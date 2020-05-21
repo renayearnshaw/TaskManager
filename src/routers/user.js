@@ -4,10 +4,6 @@ const auth = require('../middleware/authentication')
 const multer = require('multer')
 
 const router = new express.Router()
-// Images should be saved in the avatars directory
-const upload = multer({
-    dest: 'avatars'
-})
 
 // Log in an existing user - i.e. sign in
 router.post('/users/login', async (req, res) => {
@@ -89,6 +85,23 @@ router.patch('/users/me', auth, async (req, res) => {
 })
 
 // Upload a profile image for the user
+
+// Images should be saved in the avatars directory
+const upload = multer({
+    dest: 'avatars',
+    // limit file size to 1MB
+    limits: { fileSize: 1000000 },
+    // only allow certain filetypes
+    fileFilter(req, file, cb) {
+
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('Please upload one of jpg, jpeg or png'))
+        }
+
+        cb(null, true)
+    }
+})
+
 // Use the key 'avatar' to send a file containing the avatar image
 router.post('/users/me/avatar', upload.single('avatar'), async (req, res) => {
     res.send()
