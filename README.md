@@ -26,7 +26,8 @@ If successfully authenticated, an authentication token is returned.
 10. `/users/me` to display a user profile via a `GET` method.
 11. `/users/me` to update a user profile via a `PATCH` method.\
 If the password field is updated it is hashed before being stored in the database.
-12. `/users/me` to delete a user profile via a `DELETE` method.
+12. `/users/me/avatar` to upload a user's avatar image via a `POST` method.
+13. `/users/me` to delete a user profile via a `DELETE` method.
 
 Only **sign-up** or **sign-in** are public API's, and thus accessible to anyone.
 All the other API's require authentication before they can be called. So, for example, only the user who created a particular task has the authority to delete it.
