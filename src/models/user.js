@@ -30,7 +30,10 @@ const userSchema = new mongoose.Schema({
         token: {
             type: String, required: true
         }
-    }]
+    }],
+    avatar: {
+        type: Buffer
+    }
 }, {
     // Add createdAt and updatedAt timestamps
     timestamps: true

@@ -84,11 +84,19 @@ router.patch('/users/me', auth, async (req, res) => {
     }
 })
 
-// Upload a profile image for the user
+// Delete your profile
+router.delete('/users/me', auth, async (req, res) => {
+    try {
+        // Authentication returns the user to us - now remove it
+        await req.user.remove()
+        res.send(req.user)
+    } catch (error) {
+        res.status(500).send()
+    }
+})
 
-// Images should be saved in the avatars directory
+// Upload images and pass through for later processing
 const upload = multer({
-    dest: 'avatars',
     // limit file size to 1MB
     limits: { fileSize: 1000000 },
     // only allow certain filetypes
@@ -102,26 +110,34 @@ const upload = multer({
     }
 })
 
-// Use the key 'avatar' to send a file containing the avatar image
+// Upload a profile image for the user - an 'avatar'
 router.post(
     '/users/me/avatar',
+    auth,
+    // The caller uses the key 'avatar' to specify the file containing the avatar image
     upload.single('avatar'),
     async (req, res) => {
+        // The file uploaded via multer is stored in the 'file' property
+        req.user.avatar = req.file.buffer
+        await req.user.save()
         res.send()
     },
     (error, req, res, next) => {
-        res.status(400).send({error: error.message})
+        res.status(400).send({ error: error.message })
     })
 
-// Delete your profile
-router.delete('/users/me', auth, async (req, res) => {
-    try {
-        // Authentication returns the user to us - now remove it
-        await req.user.remove()
-        res.send(req.user)
-    } catch (error) {
-        res.status(500).send()
-    }
-})
+// Delete the avatar for a user
+router.delete(
+    '/users/me/avatar',
+    auth,
+    async (req, res) => {
+        req.user.avatar = undefined
+        await req.user.save()
+        res.send()
+    },
+    (error, req, res, next) => {
+        res.status(400).send({ error: error.message })
+    })
+
 
 module.exports = router
