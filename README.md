@@ -3,32 +3,36 @@ This project contains code I wrote while following [The Complete Node.js Develop
 
 ### Description
 The __TaskManager__ project is written using ES6/7 `JavaScript` and uses `Express` to create a simple `Node` web server that allows users to create, store and delete tasks.
-<br><br>The project creates a simple REST API that consists of the following:
-1. `/tasks` to create a task via a `POST` method. The id of the user who created the task is stored in the task.
-2. `/tasks` to list all tasks via a `GET` method. A user can only view tasks that they created.
-Query parameters can be supplied to :
-   - filter tasks according to whether they have been completed or not
-   - limit how many tasks are displayed (pagination)
-   - skip a number of pages (pagination)
-   - sort by fields in an ascending or descending order
-3. `/tasks/:id` to get a single task via a `GET` method. A user can only view a task if they created it.
-4. `/tasks/:id` to update a task via a `PATCH` method. A user can only update a task if they created it.
-5. `/tasks/:id` to delete a task via a `DELETE` method. A user can only delete a task if they created it.
-6. `/users` to create a user via a `POST` method (sign-up).\
+<br><br>The project creates a simple REST API that consists of the following endpoints:
+1. `/tasks`. This is used to:
+   - create a task via a `POST` method. The id of the user who created the task is stored in the task.
+   - list all tasks via a `GET` method. A user can only view tasks that they created.
+    Query parameters can be supplied to :
+       - filter tasks according to whether they have been completed or not
+       - limit how many tasks are displayed (pagination)
+       - skip a number of pages (pagination)
+       - sort by fields in an ascending or descending order
+2. `/tasks/:id`. This is used to:
+   - get a single task via a `GET` method. A user can only view a task if they created it.
+   - update a task via a `PATCH` method. A user can only update a task if they created it.
+   - delete a task via a `DELETE` method. A user can only delete a task if they created it.
+3. `/users` to create a user via a `POST` method (sign-up).\
 The body of the request contains the user's credentials. 
 The password is hashed before being stored in the database.
 If a user is successfully signed up, an authentication token is returned.
-7. `/users/login` to log a user in via a `POST` method (sign-in).\
+4. `/users/login` to log a user in via a `POST` method (sign-in).\
 The user's credentials are validated with this API. 
 If successfully authenticated, an authentication token is returned.
-8. `/users/logout` to log a user out via a `POST` method (sign-out).
-9. `/users/logoutAll` to log a user out of all their sessions via a `POST` method (sign-out).
-10. `/users/me` to display a user profile via a `GET` method.
-11. `/users/me` to update a user profile via a `PATCH` method.\
-If the password field is updated it is hashed before being stored in the database.
-12. `/users/me` to delete a user profile via a `DELETE` method.
-13. `/users/me/avatar` to upload a user's avatar image via a `POST` method.
-14. `/users/me/avatar` to delete a user's avatar image via a `DELETE` method.
+5. `/users/logout` to log a user out via a `POST` method (sign-out).
+6. `/users/logoutAll` to log a user out of all their sessions via a `POST` method (sign-out).
+7. `/users/me`. This is used to:
+   - display a user profile via a `GET` method.
+   - update a user profile via a `PATCH` method.\
+    If the password field is updated it is hashed before being stored in the database.
+   - delete a user profile via a `DELETE` method.
+8. `/users/me/avatar`. This is used to:
+   - upload a user's avatar image via a `POST` method.
+   - delete a user's avatar image via a `DELETE` method.
 
 Only **sign-up** or **sign-in** are public API's, and thus accessible to anyone.
 All the other API's require authentication before they can be called. So, for example, only the user who created a particular task has the authority to delete it.
