@@ -33,6 +33,7 @@ If successfully authenticated, an authentication token is returned.
 8. `/users/me/avatar`. This is used to:
    - upload a user's avatar image via a `POST` method.
    - delete a user's avatar image via a `DELETE` method.
+9. `/users/:id/avatar` to serve up the avatar image for a specific user.
 
 Only **sign-up** or **sign-in** are public API's, and thus accessible to anyone.
 All the other API's require authentication before they can be called. So, for example, only the user who created a particular task has the authority to delete it.
@@ -59,4 +60,4 @@ When a user provides a token in a request, we check the token provided against t
    - hash passwords
    - delete any tasks belonging to a user when a user is deleted
    - check that authentication tokens are valid
-6. `multer` for uploading and validating image files
+6. `multer` for uploading and validating image files.

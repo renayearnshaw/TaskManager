@@ -139,5 +139,22 @@ router.delete(
         res.status(400).send({ error: error.message })
     })
 
+// Server up the avatar image for a particular user
+router.get('/users/:id/avatar', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+
+        if (!user || !user.avatar) {
+            throw new Error()
+        }
+
+        // Set the response header
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.avatar)
+
+    } catch (e) {
+        res.status(404).send()
+    }
+})
 
 module.exports = router
