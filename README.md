@@ -31,7 +31,7 @@ If successfully authenticated, an authentication token is returned.
     If the password field is updated it is hashed before being stored in the database.
    - delete a user profile via a `DELETE` method.
 8. `/users/me/avatar`. This is used to:
-   - upload a user's avatar image via a `POST` method.
+   - upload a user's avatar image via a `POST` method. This endpoint can be used to create or update images.
    - delete a user's avatar image via a `DELETE` method.
 9. `/users/:id/avatar` to serve up the avatar image for a specific user.
 
@@ -61,3 +61,4 @@ When a user provides a token in a request, we check the token provided against t
    - delete any tasks belonging to a user when a user is deleted
    - check that authentication tokens are valid
 6. `multer` for uploading and validating image files.
+7. `sharp` for resizing avatar images and converting common formats to `PNG`

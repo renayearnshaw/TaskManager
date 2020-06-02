@@ -59,6 +59,9 @@ userSchema.methods.toJSON = function () {
     // Remove data that you want to remain private
     delete userObject.password
     delete userObject.tokens
+    // The avatar image can be accessed via a different endpoint, and it's also a lot of data,
+    // so there's no point returning it with the profile data
+    delete userObject.avatar
 
     return userObject
 }
