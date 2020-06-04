@@ -29,7 +29,7 @@ If successfully authenticated, an authentication token is returned.
    - display a user profile via a `GET` method.
    - update a user profile via a `PATCH` method.\
     If the password field is updated it is hashed before being stored in the database.
-   - delete a user profile via a `DELETE` method.
+   - delete a user account via a `DELETE` method.
 8. `/users/me/avatar`. This is used to:
    - upload a user's avatar image via a `POST` method. This can be used to create a new image or overwrite an existing one.
    - delete a user's avatar image via a `DELETE` method.
