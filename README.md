@@ -64,3 +64,4 @@ When a user provides a token in a request, we check the token provided against t
 7. `sharp` for resizing avatar images and converting common formats to `PNG`
 8. `SendGrid` for sending emails
 9. `env-cmd` to process environment variables
+10. `MongoDB Atlas` for MongoDB database hosting
