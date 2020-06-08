@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
         // Get the JWToken passed in Authorization header
         const token = req.header('Authorization').replace('Bearer ', '')
         // Validate the JWT
-        const decode = jwt.verify(token, 'RenaysSecret')
+        const decode = jwt.verify(token, process.env.JWT_SECRET)
         // The JWT contains the id of the user as a property. This is used to find a user
         // with the required id, but that also has a token that matches the one passed in.
         const user = await User.findOne({ _id: decode._id, 'tokens.token': token })
