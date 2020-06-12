@@ -61,7 +61,9 @@ When a user provides a token in a request, we check the token provided against t
    - delete any tasks belonging to a user when a user is deleted
    - check that authentication tokens are valid
 6. `multer` for uploading and validating image files.
-7. `sharp` for resizing avatar images and converting common formats to `PNG`
-8. `SendGrid` for sending emails
-9. `env-cmd` to process environment variables
-10. `MongoDB Atlas` for MongoDB database hosting
+7. `sharp` for resizing avatar images and converting common formats to `PNG`.
+8. `SendGrid` for sending emails when users create or delete an account.
+9. `env-cmd` to process environment variables.
+10. `MongoDB Atlas` for hosting the production MongoDB database.
+11. `Heroku` to deploy the application to production.
+13. `Jest` to add automated testing.
