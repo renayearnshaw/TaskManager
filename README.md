@@ -67,3 +67,4 @@ When a user provides a token in a request, we check the token provided against t
 10. `MongoDB Atlas` for hosting the production MongoDB database.
 11. `Heroku` to deploy the application to production.
 13. `Jest` to add automated testing.
+14. `SuperTest` to test our `Express` application.
