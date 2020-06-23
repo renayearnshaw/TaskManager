@@ -66,5 +66,5 @@ When a user provides a token in a request, we check the token provided against t
 9. `env-cmd` to process environment variables.
 10. `MongoDB Atlas` for hosting the production MongoDB database.
 11. `Heroku` to deploy the application to production.
-13. `Jest` to add automated testing.
+13. `Jest` to add automated testing and to stub out functionality.
 14. `SuperTest` to test our `Express` application.
