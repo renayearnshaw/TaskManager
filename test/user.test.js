@@ -54,7 +54,7 @@ test('Should log in an existing user', async () => {
 
     // The token returned by sign in should match the new token in the database
     const user = await User.findById(userOneId)
-    expect(response.body.token).toBe(user.tokens[1].token)
+    expect(response.body.token).toBe(user.tokens[0].token)
 })
 
 test('Shouldn\'t log an invalid user in', async () => {
@@ -96,4 +96,40 @@ test('Shouldn\'t delete account for unauthorized user', async () => {
         .delete('/users/me')
         .send()
         .expect(401)
+})
+
+test('Should upload avatar image', async () => {
+    await request(app)
+        .post('/users/me/avatar')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .attach('avatar', 'test/fixtures/profile-pic.jpg')
+        .expect(200)
+    const user = await User.findById(userOneId)
+    // toBe() uses ===, so it can't be used to compare two different objects
+    // Check that an avatar exists and is of type Buffer
+    expect(user.avatar).toEqual(expect.any(Buffer))
+})
+
+test('Should update a valid user field', async () => {
+    const response = await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            name: 'Freddy'
+        })
+        .expect(200)
+
+    // Check that the new name is stored in the database
+    const user = await User.findById(userOneId)
+    expect(user.name).toBe('Freddy')
+})
+
+test('Should not update an invalid user field', async () => {
+    const response = await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            address: 'North Leeds'
+        })
+        .expect(400)
 })
